@@ -1,15 +1,25 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { incrementVersion } from './../store/child1.actions';
+import { initialState } from '../store';
+import { updateData } from './../store/child1.actions';
+import { selectChild1Data } from './../store/child1.selectors';
 
 @Component({
   templateUrl: './child1.component.html',
 })
 export class Child1Component {
 
-  constructor(private store: Store) { }
+  formData$ = this.store.select(selectChild1Data);
 
-  onIncrement() {
-    this.store.dispatch(incrementVersion());
+  form = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+    version: ['', Validators.required]
+  });
+
+  constructor(private store: Store, private formBuilder: FormBuilder) { }
+
+  onSubmit() {
+    this.store.dispatch(updateData({ ...initialState, ...this.form.value }));
   }
 }

@@ -1,3 +1,20 @@
 <h2>Child 1</h2>
-<button (click)="onIncrement()">Increment version</button>
-<br>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [asyncFormData]="formData$ | async">
+    <p>
+        <label for="name">Name </label>
+        <input type="text" id="name" name="name" formControlName="name">
+    </p>
+    <!-- TODO : créer une directive - /!\ pas de camelcase sur les noms d'erreurs ! eg: minLength/minlength -->
+    <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)">
+        <small *ngIf="form.controls.name.hasError('required')">Name is required</small>
+        <small *ngIf="form.controls.name.hasError('minlength')">Name must have at least 4 characters</small>
+        <small *ngIf="form.controls.name.hasError('maxlength')">Name must have 8 characters max</small>
+    </div>
+    <p>
+        <label for="version">Version </label>
+        <input type="text" id="version" name="version" formControlName="version">
+    </p>
+    <p>
+        <button type="submit" [disabled]="!form.valid">Valider</button>
+    </p>
+</form>
