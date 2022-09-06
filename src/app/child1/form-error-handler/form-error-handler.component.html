@@ -1,0 +1,27 @@
+<div *ngIf="formGroup.controls[name].invalid && (formGroup.controls[name].dirty || formGroup.controls[name].touched)"
+    style="color: red">
+    <small *ngIf="formGroup.controls[name].hasError('required')">
+        {{ capitalizedName }} is required
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('minlength')">
+        {{ capitalizedName }} must have at least {{ formGroup.controls[name].errors['minlength']['requiredLength'] }}
+        characters (currently {{ formGroup.controls[name].errors['minlength']['actualLength'] }} characters)
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('maxlength')">
+        {{ capitalizedName }} must have at most {{ formGroup.controls[name].errors['maxlength']['requiredLength'] }}
+        characters (currently {{ formGroup.controls[name].errors['maxlength']['actualLength'] }} characters)
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('min')">
+        {{ capitalizedName }} must be greater than {{ formGroup.controls[name].errors['min']['min'] }}
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('max')">
+        {{ capitalizedName }} must be lower than {{ formGroup.controls[name].errors['max']['max'] }}
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('email')">
+        Invalid email format
+    </small>
+    <small *ngIf="formGroup.controls[name].hasError('pattern')">
+        Invalid format
+        (required pattern /{{ formGroup.controls[name].errors['pattern']['requiredPattern'] }}/)
+    </small>
+</div>

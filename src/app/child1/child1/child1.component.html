@@ -3,16 +3,12 @@
     <p>
         <label for="name">Name </label>
         <input type="text" id="name" name="name" formControlName="name">
+        <form-error-handler [formGroup]="form" name="name"></form-error-handler>
     </p>
-    <!-- TODO : créer une directive - /!\ pas de camelcase sur les noms d'erreurs ! eg: minLength/minlength -->
-    <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)">
-        <small *ngIf="form.controls.name.hasError('required')">Name is required</small>
-        <small *ngIf="form.controls.name.hasError('minlength')">Name must have at least 4 characters</small>
-        <small *ngIf="form.controls.name.hasError('maxlength')">Name must have 8 characters max</small>
-    </div>
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
+        <form-error-handler [formGroup]="form" name="version"></form-error-handler>
     </p>
     <p>
         <button type="submit" [disabled]="!form.valid">Valider</button>
