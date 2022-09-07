@@ -1,16 +1,19 @@
 <h2>Child 1</h2>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" [asyncFormData]="formData$ | async">
+<form [formGroup]="formDemo" (ngSubmit)="onSubmit()" [asyncFormData]="formData$ | async">
     <p>
         <label for="name">Name </label>
         <input type="text" id="name" name="name" formControlName="name">
-        <form-error-handler [formGroup]="form" name="name"></form-error-handler>
+        <form-error-handler [formGroup]="formDemo" name="name" class="alert"></form-error-handler>
+        <!-- <form-error-handler [formGroup]="formDemo" name="name" [exclude]="['pattern', 'MinLengtH']" class="alert"></form-error-handler> -->
     </p>
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
-        <form-error-handler [formGroup]="form" name="version"></form-error-handler>
+        <form-error-handler [formGroup]="formDemo" name="version" style="color: tomato; font-weight: 500;"
+            [customValidators]="customValidators"></form-error-handler>
+        <!-- <form-error-handler [formGroup]="formDemo" name="version" only="pattern" style="color: tomato; font-weight: 500;"></form-error-handler> -->
     </p>
     <p>
-        <button type="submit" [disabled]="!form.valid">Valider</button>
+        <button type="submit" [disabled]="!formDemo.valid">Valider</button>
     </p>
 </form>
