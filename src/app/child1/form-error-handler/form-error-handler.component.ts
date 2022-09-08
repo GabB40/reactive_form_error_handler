@@ -1,25 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-export interface customValidator {
+
+export interface CustomValidator {
   name: string;
   message: string;
 }
 
-
 @Component({
   selector: 'form-error-handler',
   templateUrl: './form-error-handler.component.html',
+  styleUrls: ['./form-error-handler.component.scss']
 })
 export class FormErrorHandlerComponent implements OnInit {
   @Input('formGroup') formGroup: FormGroup;
   @Input('name') name: string;
 
   @Input('exclude') exclude: string | string[] = [];
-  @Input('only') only?: string;
-  @Input('class') class?: string;
-  @Input('style') style?: string;
-  @Input('customValidators') customValidators?: customValidator[];
+  @Input('thisValidatorOnly') thisValidatorOnly?: string;
+  @Input('firstMessageOnly') firstMessageOnly: boolean = false;
+  @Input('customValidators') customValidators?: CustomValidator[];
   capitalizedName: string;
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class FormErrorHandlerComponent implements OnInit {
 
   isDisplayed(validatorName: string): boolean {
     return this.formGroup.controls[this.name].hasError(validatorName)
-      && (this.only ? this.only.toLowerCase() === validatorName : !this.isExcluded(validatorName));
+      && (this.thisValidatorOnly ? this.thisValidatorOnly.toLowerCase() === validatorName : !this.isExcluded(validatorName));
   }
 
   isExcluded(validatorName: string): boolean {

@@ -1,49 +1,65 @@
 <div *ngIf="formGroup.controls[name].invalid && (formGroup.controls[name].dirty || formGroup.controls[name].touched)"
-    [style]="style">
-    <div>
-        <small *ngIf="isDisplayed('required')">
-            {{ capitalizedName }} is required
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('minlength')">
-            {{ capitalizedName }} must have at least  
-            {{ formGroup.controls[name].errors['minlength']['requiredLength'] }} characters 
-            (currently {{ formGroup.controls[name].errors['minlength']['actualLength'] }} characters)
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('maxlength')">
-            {{ capitalizedName }} must have at most 
-            {{ formGroup.controls[name].errors['maxlength']['requiredLength'] }} characters 
-            (currently {{ formGroup.controls[name].errors['maxlength']['actualLength'] }} characters)
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('min')">
-            {{ capitalizedName }} must be greater than {{ formGroup.controls[name].errors['min']['min'] }}
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('max')">
-            {{ capitalizedName }} must be lower than {{ formGroup.controls[name].errors['max']['max'] }}
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('email')">
-            Invalid email format
-        </small>
-    </div>
-    <div>
-        <small *ngIf="isDisplayed('pattern')">
-            Invalid format
-            (required pattern /{{ formGroup.controls[name].errors['pattern']['requiredPattern'] }}/)
-        </small>
-    </div>
-    <ng-container *ngIf="customValidators">
-        <div *ngFor="let customValidator of customValidators">
-            <small *ngIf="isDisplayed(customValidator.name)">
-                {{ customValidator.message }}
+    [ngClass]="{'form-error-handler': firstMessageOnly}">
+    <ng-container *ngFor="let customValidator of customValidators">
+        <ng-container *ngIf="isDisplayed(customValidator.name)">
+            <div>
+                <small>
+                    {{ customValidator.message }}
+                </small>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('required')">
+        <div>
+            <small>
+                {{ capitalizedName }} is required
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('minlength')">
+        <div>
+            <small>
+                {{ capitalizedName }} must have at least
+                {{ formGroup.controls[name].errors['minlength']['requiredLength'] }} characters
+                (currently {{ formGroup.controls[name].errors['minlength']['actualLength'] }} characters)
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('maxlength')">
+        <div>
+            <small>
+                {{ capitalizedName }} must have at most
+                {{ formGroup.controls[name].errors['maxlength']['requiredLength'] }} characters
+                (currently {{ formGroup.controls[name].errors['maxlength']['actualLength'] }} characters)
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('min')">
+        <div>
+            <small>
+                {{ capitalizedName }} must be greater than {{ formGroup.controls[name].errors['min']['min'] }}
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('max')">
+        <div>
+            <small>
+                {{ capitalizedName }} must be lower than {{ formGroup.controls[name].errors['max']['max'] }}
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('email')">
+        <div>
+            <small>
+                Invalid email format
+            </small>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isDisplayed('pattern')">
+        <div>
+            <small>
+                Invalid format
+                (required pattern /{{ formGroup.controls[name].errors['pattern']['requiredPattern'] }}/)
             </small>
         </div>
     </ng-container>

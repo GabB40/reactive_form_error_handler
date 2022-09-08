@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { initialState } from '../store';
-import { customValidator } from './../form-error-handler/form-error-handler.component';
+import { CustomValidator } from './../form-error-handler/form-error-handler.component';
 import { updateData } from './../store/child1.actions';
 import { selectChild1Data } from './../store/child1.selectors';
 import { smallerThan10, smallerThan30 } from './validators';
@@ -14,7 +14,7 @@ import { smallerThan10, smallerThan30 } from './validators';
 })
 export class Child1Component implements OnInit {
 
-  customValidators!: customValidator[];
+  customValidators!: CustomValidator[];
   formDemo!: FormGroup;
   formData$ = this.store.select(selectChild1Data);
 
