@@ -3,14 +3,20 @@ import { incrementVersion, updateData } from './child1.actions';
 
 export const child1FeatureKey = 'child1';
 
+export interface Todo {
+  todo: string;
+  priority: number;
+}
 export interface Child1State {
   name: string;
   version: string;
+  todos: Todo[];
 }
 
 export const initialState: Child1State = {
   name: child1FeatureKey,
-  version: '0'
+  version: '0',
+  todos: []
 };
 
 export const child1Reducer = createReducer(

@@ -7,7 +7,13 @@
 <router-outlet></router-outlet>
 <br>
 <div>
-    <div><strong>child1:</strong> name = <em>{{ nameChild1$ | async }}</em> - version = <em>{{ versionChild1$ | async }}</em></div>
+    <div>
+        <strong>child1:</strong> name = <em>{{ nameChild1$ | async }}</em> - version = <em>{{ versionChild1$ | async }}</em>
+        &nbsp;
+        [<small *ngFor="let todo of todosChild1$ | async">
+            &nbsp;todo : '{{ todo.todo }}' - priority: {{ todo.priority }};&nbsp;
+        </small>]
+    </div>
     <br>
     <div><strong>child2:</strong> name = <em>{{ nameChild2$ | async }}</em> - version = <em>{{ versionChild2$ | async }}</em></div>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectChild1Name, selectChild1Version } from './child1/store/child1.selectors';
+import { selectChild1Name, selectChild1Todos, selectChild1Version } from './child1/store/child1.selectors';
 import { selectChild2Name, selectChild2Version } from './child2/store/child2.selectors';
 
 @Component({
@@ -11,6 +11,7 @@ import { selectChild2Name, selectChild2Version } from './child2/store/child2.sel
 export class AppComponent {
   nameChild1$ = this.store.select(selectChild1Name);
   versionChild1$ = this.store.select(selectChild1Version);
+  todosChild1$ = this.store.select(selectChild1Todos);
   nameChild2$ = this.store.select(selectChild2Name);
   versionChild2$ = this.store.select(selectChild2Version);
 

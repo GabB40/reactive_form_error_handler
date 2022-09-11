@@ -3,17 +3,36 @@
     <p>
         <label for="name">Name </label>
         <input type="text" id="name" name="name" formControlName="name">
-        <form-error-handler [formGroup]="formDemo" name="name" class="alert" [firstMessageOnly]="true"></form-error-handler>
-        <!-- <form-error-handler [formGroup]="formDemo" name="name" [exclude]="['pattern', 'MinLengtH']" class="alert"></form-error-handler> -->
+        <form-error-handler [formGroup]="formDemo" formCtrlName="name" class="alert"></form-error-handler>
     </p>
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
-        <form-error-handler [formGroup]="formDemo" name="version" style="color: tomato; font-weight: 500;"
-            [customValidators]="customValidators"></form-error-handler>
-        <!-- <form-error-handler [formGroup]="formDemo" name="version" thisValidatorOnly="pattern" style="color: tomato; font-weight: 500;"></form-error-handler> -->
+        <form-error-handler [formGroup]="formDemo" formCtrlName="version" style="color: tomato; font-weight: 500;"
+            [customValidators]="customValidators" exclude="smallerThan10"></form-error-handler>
     </p>
-    <p>
-        <button type="submit" [disabled]="!formDemo.valid">Valider</button>
-    </p>
+
+    <p><button type="button" (click)="onAddTodo()">Ajouter une tâche</button></p>
+    <p *ngIf="hasMaxTodosError" class="alert">{{ maxTodos }} todos max !</p>
+
+    <ng-container formArrayName="todos">
+        <div *ngFor="let todoForm of todos.controls; index as i" [formGroupName]="i">
+            <p><button type="button" (click)="onRemoveTodo(i)">&#10060;</button></p>
+            <p>
+                <label for="todo">Todo </label>
+                <input type="text" id="todo" name="todo" formControlName="todo" ngDefaultControl>
+                <form-error-handler [formGroup]="formDemo" formCtrlName="todo" formArrName='todos' [formArrIndex]='i'
+                    class="alert"></form-error-handler>
+            </p>
+            <p>
+                <label for="priority">Priority </label>
+                <input type="number" id="priority" name="priority" formControlName="priority">
+                <form-error-handler [formGroup]="formDemo" formCtrlName="priority" formArrName='todos'
+                    [formArrIndex]='i' class="alert"></form-error-handler>
+            </p>
+            <hr>
+        </div>
+    </ng-container>
+
+    <p><button type="submit" [disabled]="!formDemo.valid">Valider</button></p>
 </form>
