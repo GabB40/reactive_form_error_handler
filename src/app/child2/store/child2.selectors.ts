@@ -16,3 +16,13 @@ export const selectChild2Version = createSelector(
   ({ version }) => version
 );
 
+export const selectChild2Todos = createSelector(
+  selectChild2,
+  ({ todos }) => todos
+);
+
+export const selectChild2Data = createSelector(
+  selectChild2,
+  ({ name, version, todos }) => ({ name, version, todos })
+);
+

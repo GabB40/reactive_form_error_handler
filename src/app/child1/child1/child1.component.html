@@ -1,15 +1,14 @@
 <h2>Child 1</h2>
-<form [formGroup]="formDemo" (ngSubmit)="onSubmit()" [asyncFormData]="formData$ | async">
+<form [formGroup]="formChild1" (ngSubmit)="onSubmit()" [bindFormData]="formData$ | async">
     <p>
         <label for="name">Name </label>
         <input type="text" id="name" name="name" formControlName="name">
-        <form-error-handler [formGroup]="formDemo" formCtrlName="name" class="alert"></form-error-handler>
+        <form-error-handler formCtrlName="name" class="alert"></form-error-handler>
     </p>
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
-        <form-error-handler [formGroup]="formDemo" formCtrlName="version" style="color: tomato; font-weight: 500;"
-            [customValidators]="customValidators" exclude="smallerThan10"></form-error-handler>
+        <form-error-handler formCtrlName="version" style="color: tomato; font-weight: 500;" exclude="smallerThan10"></form-error-handler>
     </p>
 
     <p><button type="button" (click)="onAddTodo()">Ajouter une tâche</button></p>
@@ -21,18 +20,19 @@
             <p>
                 <label for="todo">Todo </label>
                 <input type="text" id="todo" name="todo" formControlName="todo" ngDefaultControl>
-                <form-error-handler [formGroup]="formDemo" formCtrlName="todo" formArrName='todos' [formArrIndex]='i'
-                    class="alert"></form-error-handler>
+                <form-error-handler formCtrlName="todo" formArrName='todos' [formArrIndex]='i' class="alert">
+                </form-error-handler>
             </p>
             <p>
                 <label for="priority">Priority </label>
                 <input type="number" id="priority" name="priority" formControlName="priority">
-                <form-error-handler [formGroup]="formDemo" formCtrlName="priority" formArrName='todos'
-                    [formArrIndex]='i' class="alert"></form-error-handler>
+                <form-error-handler formCtrlName="priority" formArrName='todos' [formArrIndex]='i' class="alert">
+                </form-error-handler>
             </p>
             <hr>
         </div>
     </ng-container>
 
-    <p><button type="submit" [disabled]="!formDemo.valid">Valider</button></p>
+    <p><button type="submit" [disabled]="!formChild1.valid">Valider</button></p>
+    <p><button type="submit" [ngClass]="{'disabled': !formChild1.valid}">Valider</button></p>
 </form>

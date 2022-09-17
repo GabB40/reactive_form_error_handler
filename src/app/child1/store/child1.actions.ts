@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Todo } from './index';
+import { Todo } from './../../models/app.interface';
 
 export const incrementVersion = createAction(
   '[Child1] Increment Version'

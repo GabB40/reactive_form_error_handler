@@ -2,19 +2,19 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormErrorHandlerModule } from '../form-error-handler/form-error-handler.module';
-import { AsyncFormDataDirective } from './../directives/async-form-data.directive';
+import { DirectivesModule } from './../directives/directives.module';
 import { Child1Component } from './child1/child1.component';
 
 
 @NgModule({
   declarations: [
-    Child1Component,
-    AsyncFormDataDirective
+    Child1Component
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormErrorHandlerModule
+    FormErrorHandlerModule,
+    DirectivesModule
   ]
 })
 export class Child1Module { }

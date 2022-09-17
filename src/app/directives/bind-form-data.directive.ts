@@ -2,11 +2,11 @@ import { Directive, Input } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 
 @Directive({
-  selector: '[asyncFormData]'
+  selector: '[bindFormData]'
 })
-export class AsyncFormDataDirective {
+export class BindFormDataDirective {
 
-  @Input('asyncFormData')
+  @Input('bindFormData')
   set data(val: any) {
     if (val) {
       this.formGroupDirective.form.patchValue(val);

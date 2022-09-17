@@ -1,12 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
+import { Todo } from './../../models/app.interface';
 import { incrementVersion, updateData } from './child1.actions';
 
 export const child1FeatureKey = 'child1';
-
-export interface Todo {
-  todo: string;
-  priority: number;
-}
 export interface Child1State {
   name: string;
   version: string;

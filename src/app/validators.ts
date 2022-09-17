@@ -6,7 +6,7 @@ export function smallerThan30(): ValidatorFn {
     if (!value) return null;
 
     return value < 30 ? { smallerThan30: true } : null;
-  }
+  };
 }
 
 export function smallerThan10(): ValidatorFn {
@@ -15,5 +15,5 @@ export function smallerThan10(): ValidatorFn {
     if (!value) return null;
 
     return value < 10 ? { smallerThan10: true } : null;
-  }
+  };
 }

@@ -1,30 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ErrorMessage } from '../../form-error-handler/form-error-handler.component';
+import { smallerThan10, smallerThan30 } from '../../validators';
 import { initialState } from '../store';
+import { ErrorMessage } from './../../form-error-handler/form-error-handler.interface';
+import { FormErrorHandlerService } from './../../form-error-handler/form-error-handler.service';
+import { Regex } from './../../form-error-handler/regex';
 import { updateData } from './../store/child1.actions';
 import { selectChild1Data } from './../store/child1.selectors';
-import { smallerThan10, smallerThan30 } from './validators';
 
 
 @Component({
   templateUrl: './child1.component.html',
-  styleUrls: ['./child1.component.scss']
+  styleUrls: ['./child1.component.scss'],
+  providers: [FormErrorHandlerService] // IMPORTANT : singleton of service at component level !
 })
 export class Child1Component implements OnInit {
 
-  customValidators!: ErrorMessage[];
-  formDemo!: FormGroup;
+  formChild1!: FormGroup;
   formData$ = this.store.select(selectChild1Data);
   maxTodos = 3;
   hasMaxTodosError: boolean = false;
 
-  constructor(private store: Store, private formBuilder: FormBuilder) { }
+  constructor(
+    private store: Store,
+    private formBuilder: FormBuilder,
+    private formErrorHandlerService: FormErrorHandlerService
+  ) { }
 
   ngOnInit(): void {
-    this.formDemo = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern('[a]*')]],
+    this.formChild1 = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(Regex.ALNUM)]],
       version: ['', [Validators.required, smallerThan10(), smallerThan30(), Validators.min(5), Validators.max(99), Validators.pattern('^(0|[1-9][0-9]*)$')]],
       todos: this.formBuilder.array(
         [],
@@ -32,15 +38,22 @@ export class Child1Component implements OnInit {
       )
     });
 
-    this.customValidators = [
+    const customValidators: ErrorMessage[] = [
       { validatorName: 'smallerThan10', message: 'It\'s smaller than 10' },
       { validatorName: 'smallerThan30', message: 'It\'s smaller than 30' },
-      { validatorName: 'required', message: 'It\'s fucking awesome' } // eg: overwrite of a default error message
+      { validatorName: 'required', message: 'You\'re a fucking genious !' } // eg: overwrite of a default error message
     ];
+
+    this.formErrorHandlerService.setConfig({
+      formGroup: this.formChild1,
+      customValidators,
+      messagesCountLimit: 1,
+      // thisValidatorOnly: 'smallerThan30'
+    });
   }
 
   get todos(): FormArray {
-    return this.formDemo.controls['todos'] as FormArray;
+    return this.formChild1.controls['todos'] as FormArray;
   }
 
   onAddTodo() {
@@ -60,6 +73,9 @@ export class Child1Component implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(updateData({ ...initialState, ...this.formDemo.value }));
+    if (this.formChild1.valid)
+      this.store.dispatch(updateData({ ...initialState, ...this.formChild1.value }));
+    else this.formErrorHandlerService.emitValueChanges(this.formChild1);
   }
+
 }
