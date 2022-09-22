@@ -16,6 +16,7 @@ export class FormErrorHandlerComponent implements OnInit {
   @Input('formCtrlName') formCtrlName: string;
 
   /** Optionals inputs */
+  @Input('label') label: string = null;
   @Input('formArrIndex') formArrIndex: number = null;
   @Input('formArrName') formArrName: string = null;
   @Input('messagesCountLimit') messagesCountLimit?: number;
@@ -26,7 +27,6 @@ export class FormErrorHandlerComponent implements OnInit {
 
   private config!: FormErrorhandlerConfig;
   private formControl: AbstractControl;
-  private capitalizedName: string;
 
   errorMessages$: Observable<ErrorMessage[]>;
 
@@ -35,7 +35,7 @@ export class FormErrorHandlerComponent implements OnInit {
   ngOnInit(): void {
     this.setConfig();
     this.setFormControl();
-    this.capitalizedName = this.formCtrlName ? this.formCtrlName[0].toUpperCase() + this.formCtrlName.slice(1) : '';
+    this.label = this.label ?? this.formCtrlName[0].toUpperCase() + this.formCtrlName.slice(1);
     this.errorMessages$ = this.setErrors();
   }
 
@@ -73,27 +73,27 @@ export class FormErrorHandlerComponent implements OnInit {
     let errorMessages: ErrorMessage[] = [
       {
         validatorName: 'required',
-        message: `${this.capitalizedName} is required`
+        message: `${this.label} is required`
       },
       {
         validatorName: 'minlength',
-        message: `${this.capitalizedName} must have at least
+        message: `${this.label} must have at least
           ${this.formControl?.errors?.['minlength']?.['requiredLength']} characters
           (currently ${this.formControl?.errors?.['minlength']?.['actualLength']} characters)`
       },
       {
         validatorName: 'maxlength',
-        message: `${this.capitalizedName} must have at most
+        message: `${this.label} must have at most
           ${this.formControl?.errors?.['maxlength']?.['requiredLength']} characters 
           (currently ${this.formControl?.errors?.['maxlength']?.['actualLength']} characters)`
       },
       {
         validatorName: 'min',
-        message: `${this.capitalizedName} must be greater than ${this.formControl?.errors?.['min']?.['min']}`
+        message: `${this.label} must be greater than ${this.formControl?.errors?.['min']?.['min']}`
       },
       {
         validatorName: 'max',
-        message: `${this.capitalizedName} must be greater than ${this.formControl?.errors?.['max']?.['max']}`
+        message: `${this.label} must be lower than ${this.formControl?.errors?.['max']?.['max']}`
       },
       {
         validatorName: 'email',
