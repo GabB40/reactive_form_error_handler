@@ -13,17 +13,17 @@ import { PatternMessages, Regex } from './regex';
 })
 export class FormErrorHandlerComponent implements OnInit {
   /** Mandatory inputs */
-  @Input('formCtrlName') formCtrlName: string;
+  @Input() formCtrlName: string;
 
   /** Optionals inputs */
-  @Input('label') label: string = null;
-  @Input('formArrIndex') formArrIndex: number = null;
-  @Input('formArrName') formArrName: string = null;
-  @Input('messagesCountLimit') messagesCountLimit?: number;
-  @Input('exclude') exclude?: string | string[];
-  @Input('thisValidatorOnly') thisValidatorOnly?: string;
-  @Input('debounceTime') debounceTime?: number;
-  @Input('patternMessages') patternMessages?: PatternMessages[];
+  @Input() label: string = null;
+  @Input() formArrIndex: number = null;
+  @Input() formArrName: string = null;
+  @Input() messagesCountLimit?: number;
+  @Input() exclude?: string | string[];
+  @Input() thisValidatorOnly?: string;
+  @Input() debounceTime?: number;
+  @Input() patternMessages?: PatternMessages[];
 
   private config!: FormErrorhandlerConfig;
   private formControl: AbstractControl;

@@ -1,7 +1,5 @@
 <ng-container *ngFor="let errorMessage of errorMessages$ | async; index as i">
-    <ng-container *ngIf="!messagesCountLimit || i < messagesCountLimit">
-        <div><small>
-            {{ errorMessage.message }}
-        </small></div>
-    </ng-container>
+  <ng-container *ngIf="!messagesCountLimit || i < messagesCountLimit">
+    {{ errorMessage.message }}
+  </ng-container>
 </ng-container>

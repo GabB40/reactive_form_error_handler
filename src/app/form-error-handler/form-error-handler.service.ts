@@ -14,7 +14,7 @@ export class FormErrorHandlerService {
     thisValidatorOnly: null,
     customValidators: [],
     patternMessages: [],
-    debounceTime: 300
+    debounceTime: 300,
   };
 
   getConfig(): FormErrorhandlerConfig {

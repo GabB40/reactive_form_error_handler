@@ -8,7 +8,7 @@
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
-        <form-error-handler formCtrlName="version" style="color: tomato; font-weight: 500;" exclude="smallerThan10"></form-error-handler>
+        <form-error-handler formCtrlName="version" exclude="smallerThan10"></form-error-handler>
     </p>
 
     <p><button type="button" (click)="onAddTodo()">Ajouter une tâche</button></p>
