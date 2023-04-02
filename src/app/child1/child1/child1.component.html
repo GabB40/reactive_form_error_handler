@@ -3,12 +3,12 @@
     <p>
         <label for="name">Name </label>
         <input type="text" id="name" name="name" formControlName="name">
-        <form-error-handler formCtrlName="name" class="alert"></form-error-handler>
+        <reactive-form-error-messages formCtrlName="name" class="alert"></reactive-form-error-messages>
     </p>
     <p>
         <label for="version">Version </label>
         <input type="text" id="version" name="version" formControlName="version">
-        <form-error-handler formCtrlName="version" exclude="smallerThan10"></form-error-handler>
+        <reactive-form-error-messages formCtrlName="version" exclude="smallerThan10"></reactive-form-error-messages>
     </p>
 
     <p><button type="button" (click)="onAddTodo()">Ajouter une tâche</button></p>
@@ -20,14 +20,14 @@
             <p>
                 <label for="todo">Todo </label>
                 <input type="text" id="todo" name="todo" formControlName="todo" ngDefaultControl>
-                <form-error-handler formCtrlName="todo" formArrName='todos' [formArrIndex]='i' class="alert">
-                </form-error-handler>
+                <reactive-form-error-messages formCtrlName="todo" formArrName='todos' [formArrIndex]='i' class="alert">
+                </reactive-form-error-messages>
             </p>
             <p>
                 <label for="priority">Priority </label>
                 <input type="number" id="priority" name="priority" formControlName="priority">
-                <form-error-handler formCtrlName="priority" formArrName='todos' [formArrIndex]='i' class="alert">
-                </form-error-handler>
+                <reactive-form-error-messages formCtrlName="priority" formArrName='todos' [formArrIndex]='i' class="alert">
+                </reactive-form-error-messages>
             </p>
             <hr>
         </div>

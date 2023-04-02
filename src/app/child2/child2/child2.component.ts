@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorMessage } from '@gabb40/reactive-form-error-messages/lib/reactive-form-error-messages.interface';
+import { PatternMessages } from '@gabb40/reactive-form-error-messages/lib/reactive-form-error-messages.regex';
+import { ReactiveFormErrorMessagesRegex, ReactiveFormErrorMessagesService } from '@gabb40/reactive-form-error-messages';
 import { Store } from '@ngrx/store';
 import { smallerThan10, smallerThan30 } from '../../validators';
 import { initialState } from '../store';
-import { ErrorMessage } from './../../form-error-handler/form-error-handler.interface';
-import { FormErrorHandlerService } from './../../form-error-handler/form-error-handler.service';
-import { PatternMessages, Regex } from './../../form-error-handler/regex';
 import { updateData } from './../store/child2.actions';
 import { selectChild2Data } from './../store/child2.selectors';
 
@@ -13,7 +13,7 @@ import { selectChild2Data } from './../store/child2.selectors';
 @Component({
   templateUrl: './child2.component.html',
   styleUrls: ['./child2.component.scss'],
-  providers: [FormErrorHandlerService] // IMPORTANT : singleton of service at component level !
+  providers: [ReactiveFormErrorMessagesService] // IMPORTANT : singleton of service at component level !
 })
 export class Child2Component implements OnInit {
 
@@ -25,13 +25,13 @@ export class Child2Component implements OnInit {
   constructor(
     private store: Store,
     private formBuilder: FormBuilder,
-    private formErrorHandlerService: FormErrorHandlerService
+    private reactiveFormErrorMessagesService: ReactiveFormErrorMessagesService
   ) { }
 
   ngOnInit(): void {
     this.formChild2 = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(Regex.ALNUM)]],
-      version: ['', [Validators.required, smallerThan10(), smallerThan30(), Validators.min(5), Validators.max(99), Validators.pattern(Regex.NUM)]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(ReactiveFormErrorMessagesRegex.ALNUM)]],
+      version: ['', [Validators.required, smallerThan10(), smallerThan30(), Validators.min(5), Validators.max(99), Validators.pattern(ReactiveFormErrorMessagesRegex.NUM)]],
       todos: this.formBuilder.array(
         [],
         [Validators.maxLength(this.maxTodos)]
@@ -45,11 +45,11 @@ export class Child2Component implements OnInit {
     ];
 
     const patternMessages: PatternMessages[] = [
-      { pattern: Regex.NUM, message: 'IMHO You just fail' },
-      { pattern: Regex.ALNUM, message: 'BOUYAAAAAAAAA !' }
+      { pattern: ReactiveFormErrorMessagesRegex.NUM, message: 'IMHO You just fail' },
+      { pattern: ReactiveFormErrorMessagesRegex.ALNUM, message: 'BOUYAAAAAAAAA !' }
     ];
 
-    this.formErrorHandlerService.setConfig({
+    this.reactiveFormErrorMessagesService.setConfig({
       formGroup: this.formChild2,
       debounceTime: 0,
       messagesCountLimit: 3,
@@ -67,8 +67,8 @@ export class Child2Component implements OnInit {
     if (this.todos.length < this.maxTodos) {
       this.todos.push(
         this.formBuilder.group({
-          todo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(Regex.ALNUMSP)]],
-          priority: ['', [Validators.required, Validators.min(1), Validators.max(5), Validators.pattern(Regex.NUM)]]
+          todo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern(ReactiveFormErrorMessagesRegex.ALNUMSP)]],
+          priority: ['', [Validators.required, Validators.min(1), Validators.max(5), Validators.pattern(ReactiveFormErrorMessagesRegex.NUM)]]
         })
       );
     } else this.hasMaxTodosError = true;
@@ -82,7 +82,7 @@ export class Child2Component implements OnInit {
   onSubmit() {
     if (this.formChild2.valid)
       this.store.dispatch(updateData({ ...initialState, ...this.formChild2.value }));
-    else this.formErrorHandlerService.emitValueChanges(this.formChild2);
+    else this.reactiveFormErrorMessagesService.emitValueChanges(this.formChild2);
   }
-  
+
 }

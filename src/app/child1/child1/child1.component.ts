@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorMessage, ReactiveFormErrorMessagesRegex, ReactiveFormErrorMessagesService } from '@gabb40/reactive-form-error-messages';
 import { Store } from '@ngrx/store';
 import { smallerThan10, smallerThan30 } from '../../validators';
 import { initialState } from '../store';
-import { ErrorMessage } from './../../form-error-handler/form-error-handler.interface';
-import { FormErrorHandlerService } from './../../form-error-handler/form-error-handler.service';
-import { Regex } from './../../form-error-handler/regex';
 import { updateData } from './../store/child1.actions';
 import { selectChild1Data } from './../store/child1.selectors';
 
@@ -13,7 +11,7 @@ import { selectChild1Data } from './../store/child1.selectors';
 @Component({
   templateUrl: './child1.component.html',
   styleUrls: ['./child1.component.scss'],
-  providers: [FormErrorHandlerService] // IMPORTANT : singleton of service at component level !
+  providers: [ReactiveFormErrorMessagesService] // IMPORTANT : singleton of service at component level !
 })
 export class Child1Component implements OnInit {
 
@@ -25,12 +23,12 @@ export class Child1Component implements OnInit {
   constructor(
     private store: Store,
     private formBuilder: FormBuilder,
-    private formErrorHandlerService: FormErrorHandlerService
+    private reactiveFormErrorMessagesService: ReactiveFormErrorMessagesService
   ) { }
 
   ngOnInit(): void {
     this.formChild1 = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(Regex.ALNUM)]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern(ReactiveFormErrorMessagesRegex.ALNUM)]],
       version: ['', [Validators.required, smallerThan10(), smallerThan30(), Validators.min(5), Validators.max(99), Validators.pattern('^(0|[1-9][0-9]*)$')]],
       todos: this.formBuilder.array(
         [],
@@ -44,7 +42,7 @@ export class Child1Component implements OnInit {
       { validatorName: 'required', message: 'You\'re a fucking genious !' } // eg: overwrite of a default error message
     ];
 
-    this.formErrorHandlerService.setConfig({
+    this.reactiveFormErrorMessagesService.setConfig({
       formGroup: this.formChild1,
       customValidators,
       messagesCountLimit: 1,
@@ -75,7 +73,7 @@ export class Child1Component implements OnInit {
   onSubmit() {
     if (this.formChild1.valid)
       this.store.dispatch(updateData({ ...initialState, ...this.formChild1.value }));
-    else this.formErrorHandlerService.emitValueChanges(this.formChild1);
+    else this.reactiveFormErrorMessagesService.emitValueChanges(this.formChild1);
   }
 
 }

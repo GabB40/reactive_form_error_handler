@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormErrorHandlerModule } from '../form-error-handler/form-error-handler.module';
+import { ReactiveFormErrorMessagesComponent } from '@gabb40/reactive-form-error-messages';
 import { DirectivesModule } from './../directives/directives.module';
 import { Child1Component } from './child1/child1.component';
 
@@ -13,7 +13,7 @@ import { Child1Component } from './child1/child1.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormErrorHandlerModule,
+    ReactiveFormErrorMessagesComponent,
     DirectivesModule
   ]
 })
